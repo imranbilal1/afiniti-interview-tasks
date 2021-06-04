@@ -14,4 +14,4 @@ using namespace std;
 #define PORT 8080
 #define SA struct sockaddr
 
-int send_server_image(int sock);
+int send_server_image(int sock, char*);

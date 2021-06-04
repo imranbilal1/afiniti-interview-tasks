@@ -12,4 +12,5 @@ using namespace std;
 #define PORT 8080
 #define SA struct sockaddr
 
+int cnt = 0;
 int recv_client_image(int sock);

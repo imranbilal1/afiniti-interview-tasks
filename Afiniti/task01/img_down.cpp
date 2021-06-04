@@ -32,7 +32,7 @@ int main()
     free(args);
     args = NULL;
     
-    exit(0);
+    return 0;
 }
 
 void *img_down(void *vargp)

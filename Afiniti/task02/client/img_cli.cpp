@@ -1,26 +1,5 @@
 #include "img_cli.h"
 
-void func(int sockfd)
-{
-	char buff[MAX];
-	int n;
-	for (;;) {
-		bzero(buff, sizeof(buff));
-		printf("Enter the string : ");
-		n = 0;
-		while ((buff[n++] = getchar()) != '\n')
-			;
-		write(sockfd, buff, sizeof(buff));
-		bzero(buff, sizeof(buff));
-		read(sockfd, buff, sizeof(buff));
-		printf("From Server : %s", buff);
-		if ((strncmp(buff, "exit", 4)) == 0) {
-			printf("Client Exit...\n");
-			break;
-		}
-	}
-}
-
 int main()
 {
 	int sockfd, connfd;
@@ -50,14 +29,15 @@ int main()
 		printf("connected to the server..\n");
 
 	// function for chat
-	//func(sockfd);
-	send_server_image(sockfd);
+	send_server_image(sockfd, "/home/ahmad/Desktop/bilal imran/Afiniti-20210601T080801Z-001/Afiniti/task02/example_0.jpg");
+	send_server_image(sockfd, "/home/ahmad/Desktop/bilal imran/Afiniti-20210601T080801Z-001/Afiniti/task02/example_1.jpg");
+	send_server_image(sockfd, "/home/ahmad/Desktop/bilal imran/Afiniti-20210601T080801Z-001/Afiniti/task02/example_2.jpg");
 
 	// close the socket
 	close(sockfd);
 }
 
-int send_server_image(int sock){
+int send_server_image(int sock, char* img_path){
 
     int n = 0;
     int siz = 0;
@@ -66,7 +46,7 @@ int send_server_image(int sock){
     char *s="";
 
     cout << "Getting image size" << endl;
-    picture = fopen("/home/ahmad/Desktop/bilal imran/Afiniti-20210601T080801Z-001/Afiniti/task02/example.jpg", "rb"); 
+    picture = fopen(img_path, "rb"); 
     fseek(picture, 0, SEEK_END);
     siz = ftell(picture);
     cout << siz << endl; // Output 880

@@ -55,31 +55,32 @@ int main()
 
 
 int recv_client_image(int sock){
-
     int n = 0;
-
-    cout << "Reading image size" << endl;
     char buf[50];
     int siz = 0;
-    if ((n = recv(sock, buf, sizeof(buf), 0) <0)){
-        perror("recv_size()");
-        exit(errno);
-    }
-    siz = atoi(buf);
-    cout << siz << endl; // 880 output
-
-    char Rbuffer[siz];
-    cout << "Reading image byte array" << endl;
-    n = 0;
-
-    if ((n = recv(sock, Rbuffer, siz, 0)) < 0){
-       perror("recv_size()");
-       exit(errno);
-     }
-
-     cout << "Converting byte array to image" << endl;
-     FILE *image;
-     image = fopen("recu.jpg", "wb");
-     fwrite(Rbuffer, sizeof(char), siz, image);
-     fclose(image);    cout << "done" << endl;
+    char imgcnt[2];
+    while(recv(sock, buf, sizeof(buf), 0)>0){
+	sprintf(imgcnt,"%d",cnt);
+    	string s(imgcnt);
+	cout << "cnt: " << cnt << endl;
+	siz = atoi(buf);
+	cout << "image size: " << siz << endl; // 880 output
+	char Rbuffer[siz];
+	cout << "Reading image byte array" << endl;
+	n = 0;
+	if (n = recv(sock, Rbuffer, siz, 0)<0){
+		perror("recv image");
+		exit(0);
+	}
+	cout << "Converting byte array to image" << endl;
+	FILE *image;
+	cout << "imgcnt: " << imgcnt  << endl;
+	cout <<  "s: " << s << endl;
+	string imgName = "recu" + s + ".jpg";
+	cout << "imgName: " << imgName << endl;
+	image = fopen((const char*)imgName.c_str(), "wb");
+	fwrite(Rbuffer, sizeof(char), siz, image);
+	fclose(image);    cout << "done" << endl;
+	cnt++;
+   }
 }

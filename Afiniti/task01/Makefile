@@ -3,3 +3,6 @@ img_down: img_down.o
 
 img_down.o: img_down.cpp
 	c++ -c img_down.cpp -pthread
+
+clean:
+	rm -R img_down.o
